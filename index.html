@@ -1,66 +1,151 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Radio Demen FM</title>
+<title>Demen FM - Emang Ndemenin</title>
 <style>
+* { box-sizing: border-box; }
 body {
   margin: 0;
   font-family: Arial, sans-serif;
-  background: linear-gradient(160deg, #071b38, #00796b);
+  background: linear-gradient(160deg, #10152f, #263d70);
   color: white;
   text-align: center;
   min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
-.radio {
-  padding: 30px 20px;
-  width: 85%;
-  max-width: 380px;
-  border-radius: 25px;
-  background: #ffffff18;
-  box-shadow: 0 8px 30px #0005;
-}
+header { padding: 28px 15px 15px; }
 .logo {
-  font-size: 65px;
-}
-h1 {
-  font-size: 30px;
-  margin-bottom: 5px;
-}
-p {
-  color: #d7fff6;
-}
-button {
-  background: #00d4a0;
-  color: #00251d;
-  border: none;
-  border-radius: 30px;
-  padding: 15px 35px;
-  font-size: 18px;
+  width: 100px; height: 100px;
+  margin: auto;
+  border-radius: 50%;
+  background: #ffbd28;
+  color: #152047;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 27px;
   font-weight: bold;
-  margin-top: 20px;
+  border: 5px solid white;
 }
-audio {
+h1 { margin-bottom: 5px; font-size: 29px; }
+.slogan { color: #ffdc76; margin-top: 8px; }
+main { max-width: 480px; margin: auto; padding: 12px 18px 35px; }
+.card {
+  background: rgba(255,255,255,.10);
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 17px;
+  padding: 18px;
+  margin: 15px 0;
+}
+h2 { font-size: 19px; margin-top: 0; }
+button, .filebtn {
+  display: block;
   width: 100%;
-  margin-top: 20px;
+  padding: 14px 10px;
+  margin-top: 12px;
+  border: none;
+  border-radius: 10px;
+  background: #ffbd28;
+  color: #152047;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
 }
+input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 0;
+  margin-top: 8px;
+}
+input[type="file"] { width: 100%; margin: 12px 0; }
+audio { width: 100%; margin-top: 12px; }
+.note { font-size: 13px; color: #d8e3ff; line-height: 1.5; }
+footer { padding: 18px; color: #d8e3ff; font-size: 13px; }
 </style>
 </head>
 <body>
-<div class="radio">
-  <div class="logo">📻</div>
+<header>
+  <div class="logo">DFM</div>
   <h1>DEMEN FM</h1>
-  <p>Emang Ndemenin</p>
-  <p>Radio online Anda</p>
-  <audio controls preload="none">
-    <source src="GANTI_DENGAN_URL_STREAMING_RADIO" type="audio/mpeg">
-    Browser tidak mendukung pemutar audio.
-  </audio>
-  <p>Musik, hiburan, dan informasi</p>
-</div>
+  <div class="slogan">Emang Ndemenin</div>
+  <p>Media Informasi dan Hiburan</p>
+</header>
+
+<main>
+  <section class="card">
+    <h2>📻 Radio Streaming</h2>
+    <p class="note">Masukkan alamat siaran radio jika sudah tersedia.</p>
+    <input id="streamUrl" type="text"
+      placeholder="Tempel alamat streaming radio di sini">
+    <button onclick="playStream()">▶ PUTAR SIARAN RADIO</button>
+    <audio id="streamPlayer" controls></audio>
+    <p class="note" id="streamStatus">
+      Alamat streaming belum diisi.
+    </p>
+  </section>
+
+  <section class="card">
+    <h2>🎵 Musik dari HP</h2>
+    <p class="note">Pilih lagu MP3 atau file audio dari HP Anda.</p>
+    <input id="musicFile" type="file" accept="audio/*">
+    <audio id="musicPlayer" controls></audio>
+    <button onclick="document.getElementById('musicPlayer').play()">
+      ▶ PUTAR MUSIK
+    </button>
+    <button onclick="document.getElementById('musicPlayer').pause()">
+      ⏸ JEDA MUSIK
+    </button>
+  </section>
+
+  <section class="card">
+    <h2>▶ YouTube</h2>
+    <p class="note">Buka YouTube untuk memilih musik atau video.</p>
+    <button onclick="window.open('https://m.youtube.com/','_blank')">
+      BUKA YOUTUBE
+    </button>
+  </section>
+</main>
+
+<footer>
+  DEMEN FM © 2026<br>
+  Emang Ndemenin ❤️
+</footer>
+
+<script>
+const musicFile = document.getElementById('musicFile');
+const musicPlayer = document.getElementById('musicPlayer');
+
+musicFile.addEventListener('change', function() {
+  if (this.files && this.files[0]) {
+    musicPlayer.src = URL.createObjectURL(this.files[0]);
+    musicPlayer.play().catch(() => {});
+  }
+});
+
+function playStream() {
+  const url = document.getElementById('streamUrl').value.trim();
+  const status = document.getElementById('streamStatus');
+  const player = document.getElementById('streamPlayer');
+
+  if (!url) {
+    status.textContent = 'Masukkan alamat streaming terlebih dahulu.';
+    return;
+  }
+
+  if (!/^https?:\/\//i.test(url)) {
+    status.textContent = 'Alamat harus diawali http:// atau https://';
+    return;
+  }
+
+  player.src = url;
+  player.play().catch(() => {
+    status.textContent =
+      'Siaran belum bisa diputar. Periksa alamat streaming radio.';
+  });
+}
+</script>
 </body>
 </html>
