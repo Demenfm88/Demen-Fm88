@@ -3,147 +3,71 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Demen FM - Emang Ndemenin</title>
 <style>
-* { box-sizing: border-box; }
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: linear-gradient(160deg, #10152f, #263d70);
-  color: white;
-  text-align: center;
-  min-height: 100vh;
-}
-header { padding: 28px 15px 15px; }
-.logo {
-  width: 100px; height: 100px;
-  margin: auto;
-  border-radius: 50%;
-  background: #ffbd28;
-  color: #152047;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 27px;
-  font-weight: bold;
-  border: 5px solid white;
-}
-h1 { margin-bottom: 5px; font-size: 29px; }
-.slogan { color: #ffdc76; margin-top: 8px; }
-main { max-width: 480px; margin: auto; padding: 12px 18px 35px; }
-.card {
-  background: rgba(255,255,255,.10);
-  border: 1px solid rgba(255,255,255,.18);
-  border-radius: 17px;
-  padding: 18px;
-  margin: 15px 0;
-}
-h2 { font-size: 19px; margin-top: 0; }
-button, .filebtn {
-  display: block;
-  width: 100%;
-  padding: 14px 10px;
-  margin-top: 12px;
-  border: none;
-  border-radius: 10px;
-  background: #ffbd28;
-  color: #152047;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-}
-input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: 0;
-  margin-top: 8px;
-}
-input[type="file"] { width: 100%; margin: 12px 0; }
-audio { width: 100%; margin-top: 12px; }
-.note { font-size: 13px; color: #d8e3ff; line-height: 1.5; }
-footer { padding: 18px; color: #d8e3ff; font-size: 13px; }
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#071b36;color:white}
+header{text-align:center;padding:35px 15px;background:linear-gradient(135deg,#073763,#087eaa)}
+.logo{font-size:38px;font-weight:900;color:#ffe45c}
+.slogan{font-size:18px;margin-top:8px}
+header p{margin-bottom:0}
+main{max-width:500px;margin:20px auto;padding:0 15px}
+.card{background:#fff;color:#172c46;border-radius:18px;padding:22px 18px;margin-bottom:18px;text-align:center;box-shadow:0 5px 20px #0003}
+h2{margin-top:0}
+button{border:0;border-radius:30px;padding:14px 25px;background:#e91e50;color:white;font-size:17px;font-weight:bold;cursor:pointer}
+audio{width:100%;margin:15px 0}
+input{width:100%;padding:12px;border:1px solid #bbb;border-radius:8px;margin:10px 0}
+.links{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.links a{display:inline-block;text-decoration:none;color:white;background:#087eaa;padding:13px 18px;border-radius:25px;font-weight:bold}
+.note{font-size:13px;color:#526579;line-height:1.5}
+footer{text-align:center;padding:20px;color:#c5d7e8;font-size:13px}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">DFM</div>
-  <h1>DEMEN FM</h1>
+  <div class="logo">DEMEN FM</div>
   <div class="slogan">Emang Ndemenin</div>
   <p>Media Informasi dan Hiburan</p>
 </header>
 
 <main>
   <section class="card">
-    <h2>📻 Radio Streaming</h2>
-    <p class="note">Masukkan alamat siaran radio jika sudah tersedia.</p>
-    <input id="streamUrl" type="text"
-      placeholder="Tempel alamat streaming radio di sini">
-    <button onclick="playStream()">▶ PUTAR SIARAN RADIO</button>
-    <audio id="streamPlayer" controls></audio>
-    <p class="note" id="streamStatus">
-      Alamat streaming belum diisi.
-    </p>
+    <h2>📻 RADIO ONLINE</h2>
+    <p>Dengarkan siaran Demen FM di mana saja</p>
+    <audio id="radio" controls preload="none"></audio>
+    <p id="status" class="note">Masukkan alamat streaming radio untuk mendengarkan siaran.</p>
+    <input id="stream" type="url" placeholder="Alamat streaming radio">
+    <button onclick="playRadio()">▶ PUTAR RADIO</button>
   </section>
 
   <section class="card">
-    <h2>🎵 Musik dari HP</h2>
-    <p class="note">Pilih lagu MP3 atau file audio dari HP Anda.</p>
-    <input id="musicFile" type="file" accept="audio/*">
-    <audio id="musicPlayer" controls></audio>
-    <button onclick="document.getElementById('musicPlayer').play()">
-      ▶ PUTAR MUSIK
-    </button>
-    <button onclick="document.getElementById('musicPlayer').pause()">
-      ⏸ JEDA MUSIK
-    </button>
-  </section>
-
-  <section class="card">
-    <h2>▶ YouTube</h2>
-    <p class="note">Buka YouTube untuk memilih musik atau video.</p>
-    <button onclick="window.open('https://m.youtube.com/','_blank')">
-      BUKA YOUTUBE
-    </button>
+    <h2>🎵 DEMEN FM</h2>
+    <p>Teman setia musik dan hiburan Anda</p>
+    <div class="links">
+      <a href="https://www.youtube.com/" target="_blank" rel="noopener">▶ YouTube</a>
+      <a href="https://wa.me/" target="_blank" rel="noopener">WhatsApp</a>
+    </div>
+    <p class="note">Tautan siaran dan media sosial dapat diperbarui nanti.</p>
   </section>
 </main>
 
-<footer>
-  DEMEN FM © 2026<br>
-  Emang Ndemenin ❤️
-</footer>
+<footer>DEMEN FM • Emang Ndemenin</footer>
 
 <script>
-const musicFile = document.getElementById('musicFile');
-const musicPlayer = document.getElementById('musicPlayer');
-
-musicFile.addEventListener('change', function() {
-  if (this.files && this.files[0]) {
-    musicPlayer.src = URL.createObjectURL(this.files[0]);
-    musicPlayer.play().catch(() => {});
-  }
-});
-
-function playStream() {
-  const url = document.getElementById('streamUrl').value.trim();
-  const status = document.getElementById('streamStatus');
-  const player = document.getElementById('streamPlayer');
-
-  if (!url) {
-    status.textContent = 'Masukkan alamat streaming terlebih dahulu.';
+function playRadio(){
+  const url=document.getElementById('stream').value.trim();
+  const radio=document.getElementById('radio');
+  const status=document.getElementById('status');
+  if(!url){
+    status.textContent='Alamat streaming radio belum diisi.';
     return;
   }
-
-  if (!/^https?:\/\//i.test(url)) {
-    status.textContent = 'Alamat harus diawali http:// atau https://';
-    return;
-  }
-
-  player.src = url;
-  player.play().catch(() => {
-    status.textContent =
-      'Siaran belum bisa diputar. Periksa alamat streaming radio.';
+  radio.src=url;
+  radio.play().then(()=>{
+    status.textContent='Siaran sedang diputar.';
+  }).catch(()=>{
+    status.textContent='Tidak bisa memutar. Periksa alamat streaming radio.';
   });
 }
 </script>
