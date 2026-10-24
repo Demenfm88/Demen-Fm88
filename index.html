@@ -71,5 +71,55 @@ function playRadio(){
   });
 }
 </script>
+
+<section class="card" id="audio-sambutan-admin">
+  <h2>🎙️ Audio Sambutan Demen FM</h2>
+  <p>Pilih audio sambutan dari HP untuk diputar saat radio offline.</p>
+
+  <label for="fileSambutan">Pilih file audio (MP3)</label>
+  <input id="fileSambutan" type="file" accept="audio/*">
+
+  <audio id="audioSambutan" controls loop preload="none" style="width:100%;margin-top:12px"></audio>
+
+  <button type="button" onclick="putarSambutan()">▶ PUTAR SAMBUTAN</button>
+  <button type="button" onclick="hentikanSambutan()">■ STOP SAMBUTAN</button>
+
+  <p id="statusSambutan" class="note">Belum ada audio yang dipilih.</p>
+</section>
+
+<script>
+const inputSambutan = document.getElementById('fileSambutan');
+const audioSambutan = document.getElementById('audioSambutan');
+const statusSambutan = document.getElementById('statusSambutan');
+
+inputSambutan.addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+
+  audioSambutan.src = URL.createObjectURL(file);
+  statusSambutan.textContent =
+    'Audio siap: ' + file.name + '. Tekan PUTAR SAMBUTAN.';
+});
+
+function putarSambutan() {
+  if (!audioSambutan.src) {
+    statusSambutan.textContent = 'Pilih file audio terlebih dahulu.';
+    return;
+  }
+
+  audioSambutan.play().then(function() {
+    statusSambutan.textContent = 'Audio sambutan sedang diputar berulang.';
+  }).catch(function() {
+    statusSambutan.textContent = 'Gagal memutar audio. Tekan tombol putar lagi.';
+  });
+}
+
+function hentikanSambutan() {
+  audioSambutan.pause();
+  audioSambutan.currentTime = 0;
+  statusSambutan.textContent = 'Audio sambutan dihentikan.';
+}
+</script>
+
 </body>
 </html>
